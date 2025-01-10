@@ -2,7 +2,11 @@ import { connection } from "../connections/moviesConnection.js";
 
 const controller = {
   index(req, res) {
-    res.send("Full Movies List");
+    const indexSql = `SELECT * FROM movies.movies;`;
+    connection.query(indexSql, (err, data) => {
+      if (err) res.json({ status: "KO", message: err.sqlMessage });
+      res.json(data);
+    });
   },
 
   show(req, res) {
