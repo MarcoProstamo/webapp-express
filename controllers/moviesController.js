@@ -1,3 +1,5 @@
+import { connection } from "../connections/moviesConnection.js";
+
 const controller = {
   index(req, res) {
     res.send("Full Movies List");

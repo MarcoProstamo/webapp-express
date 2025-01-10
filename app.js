@@ -11,7 +11,7 @@ app.use(express.static("public"));
 
 // # Router Setup
 import { router as moviesRouter } from "./routers/moviesRouter.js";
-app.use("/movies", moviesRouter);
+app.use("/api/movies", moviesRouter);
 
 // # Meme Homepage
 app.get("/", (req, res) => {
