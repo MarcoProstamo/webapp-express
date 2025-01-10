@@ -1,8 +1,6 @@
 import express from "express";
 const app = express();
 
-// # Router
-
 // # Registering Middlewares
 import errorsHandler from "./middlewares/errorsHandler.js";
 import pageNotFoundHandler from "./middlewares/pageNotFoundHandler.js";
@@ -10,6 +8,10 @@ import pageNotFoundHandler from "./middlewares/pageNotFoundHandler.js";
 // # JSON Parser + Static File in Public Folder
 app.use(express.json());
 app.use(express.static("public"));
+
+// # Router Setup
+import { router as moviesRouter } from "./routers/moviesRouter.js";
+app.use("/movies", moviesRouter);
 
 // # Meme Homepage
 app.get("/", (req, res) => {
