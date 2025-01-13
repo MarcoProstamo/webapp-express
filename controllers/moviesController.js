@@ -22,7 +22,9 @@ const controller = {
        movies.release_year, 
        movies.abstract, 
        movies.image, 
-       GROUP_CONCAT(reviews.text SEPARATOR ' ') AS reviews
+       GROUP_CONCAT(reviews.name SEPARATOR ';') names,
+       GROUP_CONCAT(reviews.vote SEPARATOR ';') votes,
+       GROUP_CONCAT(reviews.text SEPARATOR ';') reviews
     FROM movies.movies 
     INNER JOIN reviews
     ON movies.id = reviews.movie_id
