@@ -4,10 +4,12 @@ const app = express();
 // # Registering Middlewares
 import errorsHandler from "./middlewares/errorsHandler.js";
 import pageNotFoundHandler from "./middlewares/pageNotFoundHandler.js";
+import cors from "cors";
 
 // # JSON Parser + Static File in Public Folder
 app.use(express.json());
 app.use(express.static("public"));
+app.use(cors());
 
 // # Router Setup
 import { router as moviesRouter } from "./routers/moviesRouter.js";

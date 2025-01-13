@@ -26,7 +26,7 @@ const controller = {
     FROM movies.movies 
     INNER JOIN reviews
     ON movies.id = reviews.movie_id
-    WHERE movies.id = 1
+    WHERE movies.id = ?
     GROUP BY movies.id;
     `;
     connection.query(showSql, [id], (err, data) => {
