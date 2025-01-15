@@ -2,7 +2,7 @@ import { connection } from "../connections/moviesConnection.js";
 
 const controller = {
   index(req, res) {
-    const indexSql = `SELECT id, title, genre FROM movies.movies;`;
+    const indexSql = `SELECT * FROM movies.movies;`;
     connection.query(indexSql, (err, data) => {
       if (err) res.status(500).json({ status: "KO", message: err.sqlMessage });
       res.json(data);
@@ -37,20 +37,43 @@ const controller = {
     });
   },
 
-  create(req, res) {
-    res.send("Created Movie");
-  },
+  storeReview(req, res) {
+    const id = parseInt(req.params.id);
+    const { name, vote, text } = req.body;
 
-  update(req, res) {
-    res.send(`Updating movie with ID ${req.params.id}`);
-  },
+    if (!name)
+      res.status(400).json({
+        status: "KO",
+        message: "Invalid Name Input",
+      });
 
-  modify(req, res) {
-    res.send(`Partially modifying movie with ID ${req.params.id}`);
-  },
+    if (!text)
+      res.status(400).json({
+        status: "KO",
+        message: "Invalid Text Input",
+      });
 
-  destroy(req, res) {
-    res.send(`Deleted movie with ID ${req.params.id}`);
+    if (isNaN(vote))
+      res.status(400).json({
+        status: "KO",
+        message: "Invalid Vote Input",
+      });
+
+    if (vote > 5 || vote < 1)
+      res.status(400).json({
+        status: "KO",
+        message: "Invalid Vote Input",
+      });
+
+    const sql =
+      "INSERT INTO `movies`.`reviews` (`movie_id`, `name`, `vote`, `text`) VALUES (?, ?, ?, ?);";
+    connection.query(sql, [id, name, vote, text], (err) => {
+      if (err) res.status(500).json({ status: "KO", message: err.sqlMessage });
+      res.json({
+        status: "OK",
+        message: "Review Created",
+      });
+    });
   },
 };
 
